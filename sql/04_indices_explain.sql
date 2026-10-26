@@ -1,5 +1,8 @@
 USE marketplace_db;
 
+-- Para rodar este script mais de uma vez, apague o índice antes:
+-- DROP INDEX idx_product_name ON tb_product;
+
 -- Consulta antes e depois da criação do índice
 EXPLAIN
 SELECT *
