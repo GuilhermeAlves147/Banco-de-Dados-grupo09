@@ -85,10 +85,16 @@ WHERE id_product = 1;
 -- CONEXÃO 1
 -- ==========================================
 
--- Primeiro executamos essa parte na conexão 1
 
+USE marketplace_db;
+-- Primeiro executamos essa parte na conexão 1
 START TRANSACTION;
 
 -- Aqui bloqueamos o produto 1
 -- para outra conexão não conseguir alterar ele
-SELECT id_product, name,
+SELECT id_product, name, quantity
+FROM tb_product
+WHERE id_product = 1
+FOR UPDATE;
+
+ROLLBACK;
