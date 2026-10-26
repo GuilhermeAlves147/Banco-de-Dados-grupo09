@@ -15,6 +15,16 @@ JOIN tb_category c ON c.id_category = p.id_category
 WHERE o.id_order NOT IN (SELECT id_order FROM tb_order_status WHERE status = 'cancelado')
 GROUP BY c.id_category, c.category;
 
+-- Execute após 01_ddl.sql e 02_carga.sql
+CREATE OR REPLACE VIEW vw_b1_resumo_categorias AS
+SELECT c.id_category AS categoria_id, c.category AS categoria,
+       COUNT(DISTINCT p.id_product) AS total_produtos,
+       COALESCE(SUM(p.quantity),0) AS unidades_estoque,
+       COALESCE(SUM(p.quantity * p.value),0) AS valor_estoque
+FROM tb_category c
+LEFT JOIN tb_product p ON p.id_category = c.id_category
+GROUP BY c.id_category, c.category;
+
 CREATE ROLE IF NOT EXISTS 'role_admin', 'role_vendedor', 'role_analista';
 
 -- admin: dados do banco todo, sem DDL
