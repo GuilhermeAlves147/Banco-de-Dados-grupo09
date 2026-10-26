@@ -97,4 +97,29 @@ FROM tb_product
 WHERE id_product = 1
 FOR UPDATE;
 
+-- Agora NAO execute o ROLLBACK abaixo ainda: abra a conexao 2 (outra aba do Workbench)
+-- e execute o bloco da conexao 2. Depois volte aqui e execute o ROLLBACK da conexao 1.
+
+
+-- ==========================================
+-- CONEXÃO 2 (executar em OUTRA conexão, enquanto a conexão 1 está com a transação aberta)
+-- ==========================================
+
+-- USE marketplace_db;
+-- START TRANSACTION;
+--
+-- -- Tenta bloquear o mesmo produto 1: fica esperando a conexão 1 liberar
+-- -- e, passado o tempo limite de espera, aparece o erro 1205 (Lock wait timeout exceeded).
+-- SELECT id_product, name, quantity
+-- FROM tb_product
+-- WHERE id_product = 1
+-- FOR UPDATE;
+--
+-- ROLLBACK;
+
+
+-- ==========================================
+-- FINALIZAÇÃO DA CONEXÃO 1 (libera o bloqueio)
+-- ==========================================
+
 ROLLBACK;
