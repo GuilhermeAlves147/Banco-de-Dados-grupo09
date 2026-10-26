@@ -2,7 +2,7 @@ use marketplace_db;
 CREATE OR REPLACE VIEW vw_user_public AS
 SELECT id_user, user, email
 FROM tb_user;
-CREATE VIEW vw_sales_by_category AS
+CREATE OR REPLACE VIEW vw_sales_by_category AS
 SELECT c.id_category,
        c.category,
        COUNT(DISTINCT o.id_order)             AS orders,
