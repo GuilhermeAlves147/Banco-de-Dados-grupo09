@@ -1,4 +1,4 @@
--- 02b_senhas_bcrypt.sql
+-- 05_senhas_bcrypt.sql
 -- Troca as senhas em TEXTO CLARO da carga (02_carga.sql) por hash BCrypt com sal (B5: nunca guardar senha em texto claro).
 -- Necessario porque a aplicacao Spring valida o login com BCryptPasswordEncoder.matches(); com senha em texto claro nenhum usuario da carga consegue entrar.
 -- Execute DEPOIS do 02_carga.sql. A senha de cada usuario continua a mesma da carga (ex.: daniel.santos -> senha001).
