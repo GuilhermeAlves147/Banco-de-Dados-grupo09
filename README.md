@@ -129,6 +129,50 @@ Conecte-se à sua instância local do MySQL Server.
 > **Importante:** execute os arquivos na ordem indicada e verifique se a conexão com o MySQL está funcionando antes de iniciar.
 
 ---
+### 4. Configurar as credenciais do banco
+
+Abra `src/main/resources/application.properties` e ajuste a conexão:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/marketplace_db?useSSL=false&serverTimezone=America/Sao_Paulo&allowPublicKeyRetrieval=true
+spring.datasource.username=SEU_USUARIO
+spring.datasource.password=SUA_SENHA
+spring.jpa.hibernate.ddl-auto=none
+```
+
+As credenciais não devem ser versionadas. Duas formas de evitar isso:
+
+- Usar variáveis de ambiente no arquivo e definir os valores na sua máquina:
+
+  ```properties
+  spring.datasource.username=${DB_USER}
+  spring.datasource.password=${DB_PASSWORD}
+  ```
+
+- Ou criar um `application-local.properties` (já ignorado pelo `.gitignore`) e iniciar com o perfil `local`.
+
+> Confira no seu `application.properties` os nomes exatos das chaves (por exemplo, a do segredo do JWT, se existir) e a porta do servidor. O padrão do Spring Boot é a `8080`.
+
+### 5. Executar a aplicação
+
+```bash
+./mvnw spring-boot:run        # Maven
+# ou
+./gradlew bootRun             # Gradle
+```
+
+Quando aparecer `Started ... in X seconds`, a API está no ar em `http://localhost:8080`.
+
+### 🩺 Problemas comuns
+
+| Sintoma | Causa provável |
+|---|---|
+| `Access denied for user` | Usuário ou senha errados em `application.properties` |
+| `Unknown database 'marketplace_db'` | O `01_ddl.sql` ainda não foi executado |
+| `Communications link failure` | MySQL parado ou porta diferente de 3306 |
+| `Port 8080 already in use` | Defina `server.port=8081` no `application.properties` |
+
+---
 
 ## 🧪 Testes
 
